@@ -67,8 +67,13 @@ func Benchmark_expr_reuseVm(b *testing.B) {
 func Benchmark_filter(b *testing.B) {
 	params := make(map[string]interface{})
 	params["max"] = 50
+	var arr []int
+	for i := 1; i <= 100; i++ {
+		arr = append(arr, i)
+	}
+	params["array"] = arr
 
-	program, err := expr.Compile(`filter(1..100, {# > max})`, expr.Env(params))
+	program, err := expr.Compile(`filter(array, {# > max})`, expr.Env(params))
 	if err != nil {
 		b.Fatal(err)
 	}

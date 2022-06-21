@@ -31,38 +31,6 @@ func ExampleEval() {
 	// Output: Hello, world!
 }
 
-func ExampleEval_runtime_error() {
-	_, err := expr.Eval(`map(1..3, {1 / (# - 3)})`, nil)
-	fmt.Print(err)
-
-	// Output: runtime error: integer divide by zero (1:14)
-	//  | map(1..3, {1 / (# - 3)})
-	//  | .............^
-}
-
-func ExampleCompile() {
-	env := map[string]interface{}{
-		"foo": 1,
-		"bar": 99,
-	}
-
-	program, err := expr.Compile("foo in 1..99 and bar in 1..99", expr.Env(env))
-	if err != nil {
-		fmt.Printf("%v", err)
-		return
-	}
-
-	output, err := expr.Run(program, env)
-	if err != nil {
-		fmt.Printf("%v", err)
-		return
-	}
-
-	fmt.Printf("%v", output)
-
-	// Output: true
-}
-
 func ExampleEnv() {
 	type Segment struct {
 		Origin string
@@ -601,40 +569,12 @@ func TestExpr(t *testing.T) {
 			"hello world",
 		},
 		{
-			`0 in -1..1 and 1 in 1..1`,
-			true,
-		},
-		{
-			`Int in 0..1`,
-			true,
-		},
-		{
-			`Int32 in 0..1`,
-			true,
-		},
-		{
-			`Int64 in 0..1`,
-			true,
-		},
-		{
 			`1 in [1, 2, 3] && "foo" in {foo: 0, bar: 1} && "Price" in Ticket`,
 			true,
 		},
 		{
 			`1 in [1.5] || 1 not in [1]`,
 			false,
-		},
-		{
-			`One in 0..1 && Two not in 0..1`,
-			true,
-		},
-		{
-			`Two not in 0..1`,
-			true,
-		},
-		{
-			`Two not    in 0..1`,
-			true,
 		},
 		{
 			`Int32 in [10, 20]`,
@@ -659,10 +599,6 @@ func TestExpr(t *testing.T) {
 		{
 			`"foobar" endsWith "bar"`,
 			true,
-		},
-		{
-			`(0..10)[5]`,
-			5,
 		},
 		{
 			`Ticket.Price`,
@@ -717,32 +653,12 @@ func TestExpr(t *testing.T) {
 			-1,
 		},
 		{
-			`filter(1..9, {# > 7})`,
-			[]interface{}{8, 9},
-		},
-		{
-			`map(1..3, {# * #})`,
-			[]interface{}{1, 4, 9},
-		},
-		{
-			`all(1..3, {# > 0})`,
-			true,
-		},
-		{
-			`none(1..3, {# == 0})`,
-			true,
-		},
-		{
 			`any([1,1,0,1], {# == 0})`,
 			true,
 		},
 		{
 			`one([1,1,0,1], {# == 0}) and not one([1,0,0,1], {# == 0})`,
 			true,
-		},
-		{
-			`count(1..30, {# % 3 == 0})`,
-			10,
 		},
 		{
 			`Now.After(BirthDay)`,
@@ -819,14 +735,6 @@ func TestExpr(t *testing.T) {
 		{
 			`1 + 2 + Three`,
 			6,
-		},
-		{
-			`4 in 5..1`,
-			false,
-		},
-		{
-			`4..0`,
-			[]int{},
 		},
 		{
 			`MapArg({foo: "bar"})`,
@@ -1315,17 +1223,6 @@ func TestIssue105(t *testing.T) {
 	_, err = expr.Compile(`Field == ''`, expr.Env(Env{}))
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "ambiguous identifier Field")
-}
-
-func TestIssue_nested_closures(t *testing.T) {
-	code := `all(1..3, { all(1..3, { # > 0 }) and # > 0 })`
-
-	program, err := expr.Compile(code)
-	require.NoError(t, err)
-
-	output, err := expr.Run(program, nil)
-	require.NoError(t, err)
-	require.True(t, output.(bool))
 }
 
 func TestIssue138(t *testing.T) {
