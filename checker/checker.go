@@ -208,7 +208,9 @@ func (v *visitor) BinaryNode(node *ast.BinaryNode) reflect.Type {
 		if isComparable(l, r) {
 			return boolType
 		}
-
+		if isString(l) || isString(r) {
+			return boolType
+		}
 	case "or", "||", "and", "&&":
 		if isBool(l) && isBool(r) {
 			return boolType
@@ -229,7 +231,7 @@ func (v *visitor) BinaryNode(node *ast.BinaryNode) reflect.Type {
 		if isNumber(l) && isNumber(r) {
 			return boolType
 		}
-		if isString(l) && isString(r) {
+		if isString(l) || isString(r) {
 			return boolType
 		}
 

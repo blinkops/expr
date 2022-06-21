@@ -25,6 +25,7 @@ func main() {
 	echo(`import (`)
 	echo(`"fmt"`)
 	echo(`"reflect"`)
+	echo(`"strconv"`)
 	echo(`)`)
 
 	types := []string{
@@ -40,6 +41,7 @@ func main() {
 		"int64",
 		"float32",
 		"float64",
+		"string",
 	}
 
 	helpers := []struct {
@@ -104,10 +106,17 @@ func main() {
 			if helper.noFloat && strings.HasPrefix(a, "float") {
 				continue
 			}
+			if !helper.string && strings.HasPrefix(a, "string") {
+				continue
+			}
+
 			echo(`case %v:`, a)
 			echo(`switch y := b.(type) {`)
 			for j, b := range types {
 				if helper.noFloat && strings.HasPrefix(b, "float") {
+					continue
+				}
+				if !helper.string && strings.HasPrefix(b, "string") {
 					continue
 				}
 				echo(`case %v:`, b)
@@ -115,18 +124,32 @@ func main() {
 					echo(`return x %v y`, op)
 				}
 				if i < j {
-					echo(`return %v(x) %v y`, b, op)
+					if strings.HasPrefix(a, "string") {
+						echo(`if out, err := strconv.Atoi(x); err == nil {`)
+						echo(`return %v(out) %v y`, b, op)
+						echo(`}`)
+					} else if strings.HasPrefix(b, "string") {
+						echo(`if out, err := strconv.Atoi(y); err == nil {`)
+						echo(`return x %v %v(out)`, op, a)
+						echo(`}`)
+					} else {
+						echo(`return %v(x) %v y`, b, op)
+					}
 				}
 				if i > j {
-					echo(`return x %v %v(y)`, op, a)
+					if strings.HasPrefix(a, "string") {
+						echo(`if out, err := strconv.Atoi(x); err == nil {`)
+						echo(`return %v(out) %v y`, b, op)
+						echo(`}`)
+					} else if strings.HasPrefix(b, "string") {
+						echo(`if out, err := strconv.Atoi(y); err == nil {`)
+						echo(`return x %v %v(out)`, op, a)
+						echo(`}`)
+					} else {
+						echo(`return x %v %v(y)`, op, a)
+					}
 				}
 			}
-			echo(`}`)
-		}
-		if helper.string {
-			echo(`case string:`)
-			echo(`switch y := b.(type) {`)
-			echo(`case string: return x %v y`, op)
 			echo(`}`)
 		}
 		echo(`}`)

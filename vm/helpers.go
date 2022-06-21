@@ -5,6 +5,7 @@ package vm
 import (
 	"fmt"
 	"reflect"
+	"strconv"
 )
 
 func equal(a, b interface{}) interface{} {
@@ -35,6 +36,10 @@ func equal(a, b interface{}) interface{} {
 			return float32(x) == y
 		case float64:
 			return float64(x) == y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x == uint(out)
+			}
 		}
 	case uint8:
 		switch y := b.(type) {
@@ -62,6 +67,10 @@ func equal(a, b interface{}) interface{} {
 			return float32(x) == y
 		case float64:
 			return float64(x) == y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x == uint8(out)
+			}
 		}
 	case uint16:
 		switch y := b.(type) {
@@ -89,6 +98,10 @@ func equal(a, b interface{}) interface{} {
 			return float32(x) == y
 		case float64:
 			return float64(x) == y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x == uint16(out)
+			}
 		}
 	case uint32:
 		switch y := b.(type) {
@@ -116,6 +129,10 @@ func equal(a, b interface{}) interface{} {
 			return float32(x) == y
 		case float64:
 			return float64(x) == y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x == uint32(out)
+			}
 		}
 	case uint64:
 		switch y := b.(type) {
@@ -143,6 +160,10 @@ func equal(a, b interface{}) interface{} {
 			return float32(x) == y
 		case float64:
 			return float64(x) == y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x == uint64(out)
+			}
 		}
 	case int:
 		switch y := b.(type) {
@@ -170,6 +191,10 @@ func equal(a, b interface{}) interface{} {
 			return float32(x) == y
 		case float64:
 			return float64(x) == y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x == int(out)
+			}
 		}
 	case int8:
 		switch y := b.(type) {
@@ -197,6 +222,10 @@ func equal(a, b interface{}) interface{} {
 			return float32(x) == y
 		case float64:
 			return float64(x) == y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x == int8(out)
+			}
 		}
 	case int16:
 		switch y := b.(type) {
@@ -224,6 +253,10 @@ func equal(a, b interface{}) interface{} {
 			return float32(x) == y
 		case float64:
 			return float64(x) == y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x == int16(out)
+			}
 		}
 	case int32:
 		switch y := b.(type) {
@@ -251,6 +284,10 @@ func equal(a, b interface{}) interface{} {
 			return float32(x) == y
 		case float64:
 			return float64(x) == y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x == int32(out)
+			}
 		}
 	case int64:
 		switch y := b.(type) {
@@ -278,6 +315,10 @@ func equal(a, b interface{}) interface{} {
 			return float32(x) == y
 		case float64:
 			return float64(x) == y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x == int64(out)
+			}
 		}
 	case float32:
 		switch y := b.(type) {
@@ -305,6 +346,10 @@ func equal(a, b interface{}) interface{} {
 			return x == y
 		case float64:
 			return float64(x) == y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x == float32(out)
+			}
 		}
 	case float64:
 		switch y := b.(type) {
@@ -332,9 +377,61 @@ func equal(a, b interface{}) interface{} {
 			return x == float64(y)
 		case float64:
 			return x == y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x == float64(out)
+			}
 		}
 	case string:
 		switch y := b.(type) {
+		case uint:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint(out) == y
+			}
+		case uint8:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint8(out) == y
+			}
+		case uint16:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint16(out) == y
+			}
+		case uint32:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint32(out) == y
+			}
+		case uint64:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint64(out) == y
+			}
+		case int:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int(out) == y
+			}
+		case int8:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int8(out) == y
+			}
+		case int16:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int16(out) == y
+			}
+		case int32:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int32(out) == y
+			}
+		case int64:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int64(out) == y
+			}
+		case float32:
+			if out, err := strconv.Atoi(x); err == nil {
+				return float32(out) == y
+			}
+		case float64:
+			if out, err := strconv.Atoi(x); err == nil {
+				return float64(out) == y
+			}
 		case string:
 			return x == y
 		}
@@ -373,6 +470,10 @@ func less(a, b interface{}) interface{} {
 			return float32(x) < y
 		case float64:
 			return float64(x) < y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x < uint(out)
+			}
 		}
 	case uint8:
 		switch y := b.(type) {
@@ -400,6 +501,10 @@ func less(a, b interface{}) interface{} {
 			return float32(x) < y
 		case float64:
 			return float64(x) < y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x < uint8(out)
+			}
 		}
 	case uint16:
 		switch y := b.(type) {
@@ -427,6 +532,10 @@ func less(a, b interface{}) interface{} {
 			return float32(x) < y
 		case float64:
 			return float64(x) < y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x < uint16(out)
+			}
 		}
 	case uint32:
 		switch y := b.(type) {
@@ -454,6 +563,10 @@ func less(a, b interface{}) interface{} {
 			return float32(x) < y
 		case float64:
 			return float64(x) < y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x < uint32(out)
+			}
 		}
 	case uint64:
 		switch y := b.(type) {
@@ -481,6 +594,10 @@ func less(a, b interface{}) interface{} {
 			return float32(x) < y
 		case float64:
 			return float64(x) < y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x < uint64(out)
+			}
 		}
 	case int:
 		switch y := b.(type) {
@@ -508,6 +625,10 @@ func less(a, b interface{}) interface{} {
 			return float32(x) < y
 		case float64:
 			return float64(x) < y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x < int(out)
+			}
 		}
 	case int8:
 		switch y := b.(type) {
@@ -535,6 +656,10 @@ func less(a, b interface{}) interface{} {
 			return float32(x) < y
 		case float64:
 			return float64(x) < y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x < int8(out)
+			}
 		}
 	case int16:
 		switch y := b.(type) {
@@ -562,6 +687,10 @@ func less(a, b interface{}) interface{} {
 			return float32(x) < y
 		case float64:
 			return float64(x) < y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x < int16(out)
+			}
 		}
 	case int32:
 		switch y := b.(type) {
@@ -589,6 +718,10 @@ func less(a, b interface{}) interface{} {
 			return float32(x) < y
 		case float64:
 			return float64(x) < y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x < int32(out)
+			}
 		}
 	case int64:
 		switch y := b.(type) {
@@ -616,6 +749,10 @@ func less(a, b interface{}) interface{} {
 			return float32(x) < y
 		case float64:
 			return float64(x) < y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x < int64(out)
+			}
 		}
 	case float32:
 		switch y := b.(type) {
@@ -643,6 +780,10 @@ func less(a, b interface{}) interface{} {
 			return x < y
 		case float64:
 			return float64(x) < y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x < float32(out)
+			}
 		}
 	case float64:
 		switch y := b.(type) {
@@ -670,9 +811,61 @@ func less(a, b interface{}) interface{} {
 			return x < float64(y)
 		case float64:
 			return x < y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x < float64(out)
+			}
 		}
 	case string:
 		switch y := b.(type) {
+		case uint:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint(out) < y
+			}
+		case uint8:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint8(out) < y
+			}
+		case uint16:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint16(out) < y
+			}
+		case uint32:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint32(out) < y
+			}
+		case uint64:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint64(out) < y
+			}
+		case int:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int(out) < y
+			}
+		case int8:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int8(out) < y
+			}
+		case int16:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int16(out) < y
+			}
+		case int32:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int32(out) < y
+			}
+		case int64:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int64(out) < y
+			}
+		case float32:
+			if out, err := strconv.Atoi(x); err == nil {
+				return float32(out) < y
+			}
+		case float64:
+			if out, err := strconv.Atoi(x); err == nil {
+				return float64(out) < y
+			}
 		case string:
 			return x < y
 		}
@@ -708,6 +901,10 @@ func more(a, b interface{}) interface{} {
 			return float32(x) > y
 		case float64:
 			return float64(x) > y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x > uint(out)
+			}
 		}
 	case uint8:
 		switch y := b.(type) {
@@ -735,6 +932,10 @@ func more(a, b interface{}) interface{} {
 			return float32(x) > y
 		case float64:
 			return float64(x) > y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x > uint8(out)
+			}
 		}
 	case uint16:
 		switch y := b.(type) {
@@ -762,6 +963,10 @@ func more(a, b interface{}) interface{} {
 			return float32(x) > y
 		case float64:
 			return float64(x) > y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x > uint16(out)
+			}
 		}
 	case uint32:
 		switch y := b.(type) {
@@ -789,6 +994,10 @@ func more(a, b interface{}) interface{} {
 			return float32(x) > y
 		case float64:
 			return float64(x) > y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x > uint32(out)
+			}
 		}
 	case uint64:
 		switch y := b.(type) {
@@ -816,6 +1025,10 @@ func more(a, b interface{}) interface{} {
 			return float32(x) > y
 		case float64:
 			return float64(x) > y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x > uint64(out)
+			}
 		}
 	case int:
 		switch y := b.(type) {
@@ -843,6 +1056,10 @@ func more(a, b interface{}) interface{} {
 			return float32(x) > y
 		case float64:
 			return float64(x) > y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x > int(out)
+			}
 		}
 	case int8:
 		switch y := b.(type) {
@@ -870,6 +1087,10 @@ func more(a, b interface{}) interface{} {
 			return float32(x) > y
 		case float64:
 			return float64(x) > y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x > int8(out)
+			}
 		}
 	case int16:
 		switch y := b.(type) {
@@ -897,6 +1118,10 @@ func more(a, b interface{}) interface{} {
 			return float32(x) > y
 		case float64:
 			return float64(x) > y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x > int16(out)
+			}
 		}
 	case int32:
 		switch y := b.(type) {
@@ -924,6 +1149,10 @@ func more(a, b interface{}) interface{} {
 			return float32(x) > y
 		case float64:
 			return float64(x) > y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x > int32(out)
+			}
 		}
 	case int64:
 		switch y := b.(type) {
@@ -951,6 +1180,10 @@ func more(a, b interface{}) interface{} {
 			return float32(x) > y
 		case float64:
 			return float64(x) > y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x > int64(out)
+			}
 		}
 	case float32:
 		switch y := b.(type) {
@@ -978,6 +1211,10 @@ func more(a, b interface{}) interface{} {
 			return x > y
 		case float64:
 			return float64(x) > y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x > float32(out)
+			}
 		}
 	case float64:
 		switch y := b.(type) {
@@ -1005,9 +1242,61 @@ func more(a, b interface{}) interface{} {
 			return x > float64(y)
 		case float64:
 			return x > y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x > float64(out)
+			}
 		}
 	case string:
 		switch y := b.(type) {
+		case uint:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint(out) > y
+			}
+		case uint8:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint8(out) > y
+			}
+		case uint16:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint16(out) > y
+			}
+		case uint32:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint32(out) > y
+			}
+		case uint64:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint64(out) > y
+			}
+		case int:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int(out) > y
+			}
+		case int8:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int8(out) > y
+			}
+		case int16:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int16(out) > y
+			}
+		case int32:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int32(out) > y
+			}
+		case int64:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int64(out) > y
+			}
+		case float32:
+			if out, err := strconv.Atoi(x); err == nil {
+				return float32(out) > y
+			}
+		case float64:
+			if out, err := strconv.Atoi(x); err == nil {
+				return float64(out) > y
+			}
 		case string:
 			return x > y
 		}
@@ -1043,6 +1332,10 @@ func lessOrEqual(a, b interface{}) interface{} {
 			return float32(x) <= y
 		case float64:
 			return float64(x) <= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x <= uint(out)
+			}
 		}
 	case uint8:
 		switch y := b.(type) {
@@ -1070,6 +1363,10 @@ func lessOrEqual(a, b interface{}) interface{} {
 			return float32(x) <= y
 		case float64:
 			return float64(x) <= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x <= uint8(out)
+			}
 		}
 	case uint16:
 		switch y := b.(type) {
@@ -1097,6 +1394,10 @@ func lessOrEqual(a, b interface{}) interface{} {
 			return float32(x) <= y
 		case float64:
 			return float64(x) <= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x <= uint16(out)
+			}
 		}
 	case uint32:
 		switch y := b.(type) {
@@ -1124,6 +1425,10 @@ func lessOrEqual(a, b interface{}) interface{} {
 			return float32(x) <= y
 		case float64:
 			return float64(x) <= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x <= uint32(out)
+			}
 		}
 	case uint64:
 		switch y := b.(type) {
@@ -1151,6 +1456,10 @@ func lessOrEqual(a, b interface{}) interface{} {
 			return float32(x) <= y
 		case float64:
 			return float64(x) <= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x <= uint64(out)
+			}
 		}
 	case int:
 		switch y := b.(type) {
@@ -1178,6 +1487,10 @@ func lessOrEqual(a, b interface{}) interface{} {
 			return float32(x) <= y
 		case float64:
 			return float64(x) <= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x <= int(out)
+			}
 		}
 	case int8:
 		switch y := b.(type) {
@@ -1205,6 +1518,10 @@ func lessOrEqual(a, b interface{}) interface{} {
 			return float32(x) <= y
 		case float64:
 			return float64(x) <= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x <= int8(out)
+			}
 		}
 	case int16:
 		switch y := b.(type) {
@@ -1232,6 +1549,10 @@ func lessOrEqual(a, b interface{}) interface{} {
 			return float32(x) <= y
 		case float64:
 			return float64(x) <= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x <= int16(out)
+			}
 		}
 	case int32:
 		switch y := b.(type) {
@@ -1259,6 +1580,10 @@ func lessOrEqual(a, b interface{}) interface{} {
 			return float32(x) <= y
 		case float64:
 			return float64(x) <= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x <= int32(out)
+			}
 		}
 	case int64:
 		switch y := b.(type) {
@@ -1286,6 +1611,10 @@ func lessOrEqual(a, b interface{}) interface{} {
 			return float32(x) <= y
 		case float64:
 			return float64(x) <= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x <= int64(out)
+			}
 		}
 	case float32:
 		switch y := b.(type) {
@@ -1313,6 +1642,10 @@ func lessOrEqual(a, b interface{}) interface{} {
 			return x <= y
 		case float64:
 			return float64(x) <= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x <= float32(out)
+			}
 		}
 	case float64:
 		switch y := b.(type) {
@@ -1340,9 +1673,61 @@ func lessOrEqual(a, b interface{}) interface{} {
 			return x <= float64(y)
 		case float64:
 			return x <= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x <= float64(out)
+			}
 		}
 	case string:
 		switch y := b.(type) {
+		case uint:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint(out) <= y
+			}
+		case uint8:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint8(out) <= y
+			}
+		case uint16:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint16(out) <= y
+			}
+		case uint32:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint32(out) <= y
+			}
+		case uint64:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint64(out) <= y
+			}
+		case int:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int(out) <= y
+			}
+		case int8:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int8(out) <= y
+			}
+		case int16:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int16(out) <= y
+			}
+		case int32:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int32(out) <= y
+			}
+		case int64:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int64(out) <= y
+			}
+		case float32:
+			if out, err := strconv.Atoi(x); err == nil {
+				return float32(out) <= y
+			}
+		case float64:
+			if out, err := strconv.Atoi(x); err == nil {
+				return float64(out) <= y
+			}
 		case string:
 			return x <= y
 		}
@@ -1378,6 +1763,10 @@ func moreOrEqual(a, b interface{}) interface{} {
 			return float32(x) >= y
 		case float64:
 			return float64(x) >= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x >= uint(out)
+			}
 		}
 	case uint8:
 		switch y := b.(type) {
@@ -1405,6 +1794,10 @@ func moreOrEqual(a, b interface{}) interface{} {
 			return float32(x) >= y
 		case float64:
 			return float64(x) >= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x >= uint8(out)
+			}
 		}
 	case uint16:
 		switch y := b.(type) {
@@ -1432,6 +1825,10 @@ func moreOrEqual(a, b interface{}) interface{} {
 			return float32(x) >= y
 		case float64:
 			return float64(x) >= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x >= uint16(out)
+			}
 		}
 	case uint32:
 		switch y := b.(type) {
@@ -1459,6 +1856,10 @@ func moreOrEqual(a, b interface{}) interface{} {
 			return float32(x) >= y
 		case float64:
 			return float64(x) >= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x >= uint32(out)
+			}
 		}
 	case uint64:
 		switch y := b.(type) {
@@ -1486,6 +1887,10 @@ func moreOrEqual(a, b interface{}) interface{} {
 			return float32(x) >= y
 		case float64:
 			return float64(x) >= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x >= uint64(out)
+			}
 		}
 	case int:
 		switch y := b.(type) {
@@ -1513,6 +1918,10 @@ func moreOrEqual(a, b interface{}) interface{} {
 			return float32(x) >= y
 		case float64:
 			return float64(x) >= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x >= int(out)
+			}
 		}
 	case int8:
 		switch y := b.(type) {
@@ -1540,6 +1949,10 @@ func moreOrEqual(a, b interface{}) interface{} {
 			return float32(x) >= y
 		case float64:
 			return float64(x) >= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x >= int8(out)
+			}
 		}
 	case int16:
 		switch y := b.(type) {
@@ -1567,6 +1980,10 @@ func moreOrEqual(a, b interface{}) interface{} {
 			return float32(x) >= y
 		case float64:
 			return float64(x) >= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x >= int16(out)
+			}
 		}
 	case int32:
 		switch y := b.(type) {
@@ -1594,6 +2011,10 @@ func moreOrEqual(a, b interface{}) interface{} {
 			return float32(x) >= y
 		case float64:
 			return float64(x) >= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x >= int32(out)
+			}
 		}
 	case int64:
 		switch y := b.(type) {
@@ -1621,6 +2042,10 @@ func moreOrEqual(a, b interface{}) interface{} {
 			return float32(x) >= y
 		case float64:
 			return float64(x) >= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x >= int64(out)
+			}
 		}
 	case float32:
 		switch y := b.(type) {
@@ -1648,6 +2073,10 @@ func moreOrEqual(a, b interface{}) interface{} {
 			return x >= y
 		case float64:
 			return float64(x) >= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x >= float32(out)
+			}
 		}
 	case float64:
 		switch y := b.(type) {
@@ -1675,9 +2104,61 @@ func moreOrEqual(a, b interface{}) interface{} {
 			return x >= float64(y)
 		case float64:
 			return x >= y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x >= float64(out)
+			}
 		}
 	case string:
 		switch y := b.(type) {
+		case uint:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint(out) >= y
+			}
+		case uint8:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint8(out) >= y
+			}
+		case uint16:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint16(out) >= y
+			}
+		case uint32:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint32(out) >= y
+			}
+		case uint64:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint64(out) >= y
+			}
+		case int:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int(out) >= y
+			}
+		case int8:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int8(out) >= y
+			}
+		case int16:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int16(out) >= y
+			}
+		case int32:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int32(out) >= y
+			}
+		case int64:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int64(out) >= y
+			}
+		case float32:
+			if out, err := strconv.Atoi(x); err == nil {
+				return float32(out) >= y
+			}
+		case float64:
+			if out, err := strconv.Atoi(x); err == nil {
+				return float64(out) >= y
+			}
 		case string:
 			return x >= y
 		}
@@ -1713,6 +2194,10 @@ func add(a, b interface{}) interface{} {
 			return float32(x) + y
 		case float64:
 			return float64(x) + y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x + uint(out)
+			}
 		}
 	case uint8:
 		switch y := b.(type) {
@@ -1740,6 +2225,10 @@ func add(a, b interface{}) interface{} {
 			return float32(x) + y
 		case float64:
 			return float64(x) + y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x + uint8(out)
+			}
 		}
 	case uint16:
 		switch y := b.(type) {
@@ -1767,6 +2256,10 @@ func add(a, b interface{}) interface{} {
 			return float32(x) + y
 		case float64:
 			return float64(x) + y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x + uint16(out)
+			}
 		}
 	case uint32:
 		switch y := b.(type) {
@@ -1794,6 +2287,10 @@ func add(a, b interface{}) interface{} {
 			return float32(x) + y
 		case float64:
 			return float64(x) + y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x + uint32(out)
+			}
 		}
 	case uint64:
 		switch y := b.(type) {
@@ -1821,6 +2318,10 @@ func add(a, b interface{}) interface{} {
 			return float32(x) + y
 		case float64:
 			return float64(x) + y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x + uint64(out)
+			}
 		}
 	case int:
 		switch y := b.(type) {
@@ -1848,6 +2349,10 @@ func add(a, b interface{}) interface{} {
 			return float32(x) + y
 		case float64:
 			return float64(x) + y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x + int(out)
+			}
 		}
 	case int8:
 		switch y := b.(type) {
@@ -1875,6 +2380,10 @@ func add(a, b interface{}) interface{} {
 			return float32(x) + y
 		case float64:
 			return float64(x) + y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x + int8(out)
+			}
 		}
 	case int16:
 		switch y := b.(type) {
@@ -1902,6 +2411,10 @@ func add(a, b interface{}) interface{} {
 			return float32(x) + y
 		case float64:
 			return float64(x) + y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x + int16(out)
+			}
 		}
 	case int32:
 		switch y := b.(type) {
@@ -1929,6 +2442,10 @@ func add(a, b interface{}) interface{} {
 			return float32(x) + y
 		case float64:
 			return float64(x) + y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x + int32(out)
+			}
 		}
 	case int64:
 		switch y := b.(type) {
@@ -1956,6 +2473,10 @@ func add(a, b interface{}) interface{} {
 			return float32(x) + y
 		case float64:
 			return float64(x) + y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x + int64(out)
+			}
 		}
 	case float32:
 		switch y := b.(type) {
@@ -1983,6 +2504,10 @@ func add(a, b interface{}) interface{} {
 			return x + y
 		case float64:
 			return float64(x) + y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x + float32(out)
+			}
 		}
 	case float64:
 		switch y := b.(type) {
@@ -2010,9 +2535,61 @@ func add(a, b interface{}) interface{} {
 			return x + float64(y)
 		case float64:
 			return x + y
+		case string:
+			if out, err := strconv.Atoi(y); err == nil {
+				return x + float64(out)
+			}
 		}
 	case string:
 		switch y := b.(type) {
+		case uint:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint(out) + y
+			}
+		case uint8:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint8(out) + y
+			}
+		case uint16:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint16(out) + y
+			}
+		case uint32:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint32(out) + y
+			}
+		case uint64:
+			if out, err := strconv.Atoi(x); err == nil {
+				return uint64(out) + y
+			}
+		case int:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int(out) + y
+			}
+		case int8:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int8(out) + y
+			}
+		case int16:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int16(out) + y
+			}
+		case int32:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int32(out) + y
+			}
+		case int64:
+			if out, err := strconv.Atoi(x); err == nil {
+				return int64(out) + y
+			}
+		case float32:
+			if out, err := strconv.Atoi(x); err == nil {
+				return float32(out) + y
+			}
+		case float64:
+			if out, err := strconv.Atoi(x); err == nil {
+				return float64(out) + y
+			}
 		case string:
 			return x + y
 		}
