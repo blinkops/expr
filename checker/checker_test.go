@@ -144,7 +144,6 @@ func TestCheck(t *testing.T) {
 		"Int % Int > 1",
 		"Int + Int + Int",
 		"Int == Any",
-		"Int in Int..Int",
 		"Int64 % 1",
 		"IntPtr == Int",
 		"len([])",
@@ -173,8 +172,6 @@ func TestCheck(t *testing.T) {
 		`"a" < "b"`,
 		"Variadic('', 1, 2) + Variadic('')",
 		"Foo.Variadic('', 1, 2) + Foo.Variadic('')",
-		"count(1..30, {# % 3 == 0}) > 0",
-		"map(1..3, {#}) == [1,2,3]",
 		"map(filter(ArrayOfFoo, {.Int64 > 0}), {.Bar})",
 	}
 	for _, test := range typeTests {
@@ -402,11 +399,6 @@ invalid operation: % (mismatched types int and bool) (1:5)
 Int ** Bool
 invalid operation: ** (mismatched types int and bool) (1:5)
  | Int ** Bool
- | ....^
-
-Int .. Bool
-invalid operation: .. (mismatched types int and bool) (1:5)
- | Int .. Bool
  | ....^
 
 NilFn() and BoolFn()

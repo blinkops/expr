@@ -5,11 +5,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
-
 	"github.com/antonmedv/expr/file"
 	. "github.com/antonmedv/expr/parser/lexer"
+	"github.com/stretchr/testify/assert"
 )
 
 type lexTest struct {
@@ -113,15 +111,6 @@ var lexTests = []lexTest{
 		},
 	},
 	{
-		`1..5`,
-		[]Token{
-			{Kind: Number, Value: "1"},
-			{Kind: Operator, Value: ".."},
-			{Kind: Number, Value: "5"},
-			{Kind: EOF},
-		},
-	},
-	{
 		`$i _0 früh`,
 		[]Token{
 			{Kind: Identifier, Value: "$i"},
@@ -158,21 +147,6 @@ func TestLex(t *testing.T) {
 			t.Errorf("%s:\ngot\n\t%+v\nexpected\n\t%v", test.input, tokens, test.tokens)
 		}
 	}
-}
-
-func TestLex_location(t *testing.T) {
-	source := file.NewSource("1..2 3..4")
-	tokens, err := Lex(source)
-	require.NoError(t, err)
-	require.Equal(t, []Token{
-		{Location: file.Location{Line: 1, Column: 0}, Kind: Number, Value: "1"},
-		{Location: file.Location{Line: 1, Column: 1}, Kind: Operator, Value: ".."},
-		{Location: file.Location{Line: 1, Column: 3}, Kind: Number, Value: "2"},
-		{Location: file.Location{Line: 1, Column: 5}, Kind: Number, Value: "3"},
-		{Location: file.Location{Line: 1, Column: 6}, Kind: Operator, Value: ".."},
-		{Location: file.Location{Line: 1, Column: 8}, Kind: Number, Value: "4"},
-		{Location: file.Location{Line: 1, Column: 8}, Kind: EOF, Value: ""},
-	}, tokens)
 }
 
 const errorTests = `
