@@ -20,6 +20,14 @@ type Fetcher interface {
 }
 
 func fetch(from, i interface{}, nilsafe bool) interface{} {
+	defer func() {
+		if r := recover(); r != nil {
+			if !nilsafe {
+				panic(r)
+			}
+		}
+	}()
+
 	if fetcher, ok := from.(Fetcher); ok {
 		value := fetcher.Fetch(i)
 		if value != nil {

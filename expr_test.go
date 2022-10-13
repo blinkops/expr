@@ -792,6 +792,10 @@ func TestExpr(t *testing.T) {
 			`Concat("a", 1, [])`,
 			`a1[]`,
 		},
+		{
+			`String?.a`,
+			nil,
+		},
 	}
 
 	for _, tt := range tests {
