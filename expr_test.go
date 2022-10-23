@@ -306,6 +306,37 @@ func ExampleAllowUndefinedVariables() {
 	// Hello, you!
 }
 
+func ExampleAllowUndefinedVariables_json_dot_walking() {
+	code := `a.b.c.d.e.f == "" ? foo + bar : foo + name`
+
+	// If environment has different zero values, then undefined variables
+	// will have it as default value.
+	env := map[string]interface{}{
+		"foo":  "foo ",
+		"bar":  "bar ",
+		"name": "test",
+		"a":    map[string]string{},
+	}
+
+	options := []expr.Option{
+		expr.Env(env),
+		expr.AllowUndefinedVariables(), // Allow to use undefined variables.
+	}
+
+	program, err := expr.Compile(code, options...)
+	if err != nil {
+		fmt.Printf("%v", err)
+		return
+	}
+
+	output, err := expr.Run(program, env)
+	if err != nil {
+		fmt.Printf("%v", err)
+		return
+	}
+	fmt.Printf("%v", output)
+}
+
 func ExampleAllowUndefinedVariables_zero_value() {
 	code := `name == "" ? foo + bar : foo + name`
 
@@ -947,11 +978,11 @@ func TestExpr_eval_with_env(t *testing.T) {
 }
 
 func TestExpr_fetch_from_func(t *testing.T) {
-	_, err := expr.Eval("foo.Value", map[string]interface{}{
+	out, err := expr.Eval("foo.Value", map[string]interface{}{
 		"foo": func() {},
 	})
-	assert.Error(t, err)
-	assert.Contains(t, err.Error(), "cannot fetch Value from func()")
+	assert.NoError(t, err)
+	assert.Equal(t, nil, out)
 }
 
 func TestExpr_map_default_values(t *testing.T) {

@@ -412,6 +412,10 @@ func (v *visitor) MemberNode(node *ast.MemberNode) (reflect.Type, info) {
 		}
 	}
 
+	if !v.config.Strict {
+		return anyType, info{}
+	}
+
 	return v.error(node, "type %v[%v] is undefined", base, prop)
 }
 

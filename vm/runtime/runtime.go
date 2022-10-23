@@ -9,6 +9,12 @@ import (
 )
 
 func Fetch(from, i interface{}) interface{} {
+	defer func() {
+		if r := recover(); r != nil {
+			// We recover here in order to get back nil always if there is an error
+		}
+	}()
+
 	v := reflect.ValueOf(from)
 	kind := v.Kind()
 	if kind == reflect.Invalid {
