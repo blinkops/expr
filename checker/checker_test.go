@@ -32,7 +32,6 @@ var successTests = []string{
 	"Int % Int > 1",
 	"Int + Int + Int > 0",
 	"Int == Any",
-	"Int in Int..Int",
 	"IntPtrPtr + 1 > 0",
 	"1 + 2 + Int64 > 0",
 	"Int64 % 1 > 0",
@@ -87,8 +86,6 @@ var successTests = []string{
 	"EmbedString == ''",
 	"{id: Foo.Bar.Baz, 'str': String} == {}",
 	"Variadic(0, 1, 2) || Variadic(0)",
-	"count(1..30, {# % 3 == 0}) > 0",
-	"map(1..3, {#}) == [1,2,3]",
 	"map(filter(ArrayOfFoo, {.Bar.Baz != ''}), {.Bar}) == []",
 	"filter(Any, {.AnyMethod()})[0] == ''",
 	"Time == Time",
@@ -348,11 +345,6 @@ invalid operation: % (mismatched types int and bool) (1:5)
 Int ** Bool
 invalid operation: ** (mismatched types int and bool) (1:5)
  | Int ** Bool
- | ....^
-
-Int .. Bool
-invalid operation: .. (mismatched types int and bool) (1:5)
- | Int .. Bool
  | ....^
 
 Any > Foo

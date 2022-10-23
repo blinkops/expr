@@ -52,7 +52,6 @@ var binaryOperators = map[string]operator{
 	"contains":   {20, left},
 	"startsWith": {20, left},
 	"endsWith":   {20, left},
-	"..":         {25, left},
 	"+":          {30, left},
 	"-":          {30, left},
 	"*":          {60, left},

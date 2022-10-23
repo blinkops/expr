@@ -232,18 +232,6 @@ func (vm *VM) Run(program *Program, env interface{}) (out interface{}, err error
 			a := vm.pop()
 			vm.push(runtime.Exponent(a, b))
 
-		case OpRange:
-			b := vm.pop()
-			a := vm.pop()
-			min := runtime.ToInt(a)
-			max := runtime.ToInt(b)
-			size := max - min + 1
-			if vm.memory+size >= vm.limit {
-				panic("memory budget exceeded")
-			}
-			vm.push(runtime.MakeRange(min, max))
-			vm.memory += size
-
 		case OpMatches:
 			b := vm.pop()
 			a := vm.pop()

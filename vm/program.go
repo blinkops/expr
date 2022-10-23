@@ -159,9 +159,6 @@ func (program *Program) Disassemble() string {
 		case OpExponent:
 			code("OpExponent")
 
-		case OpRange:
-			code("OpRange")
-
 		case OpMatches:
 			code("OpMatches")
 

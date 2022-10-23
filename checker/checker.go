@@ -321,15 +321,6 @@ func (v *visitor) BinaryNode(node *ast.BinaryNode) (reflect.Type, info) {
 			return boolType, info{}
 		}
 
-	case "..":
-		ret := reflect.SliceOf(integerType)
-		if isInteger(l) && isInteger(r) {
-			return ret, info{}
-		}
-		if or(l, r, isInteger) {
-			return ret, info{}
-		}
-
 	default:
 		return v.error(node, "unknown operator (%v)", node.Operator)
 

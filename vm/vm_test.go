@@ -48,20 +48,6 @@ func TestRun_Debugger(t *testing.T) {
 	require.Nil(t, debug.Scope())
 }
 
-func TestRun_ReuseVM(t *testing.T) {
-	node, err := parser.Parse(`map(1..2, {#})`)
-	require.NoError(t, err)
-
-	program, err := compiler.Compile(node, nil)
-	require.NoError(t, err)
-
-	reuse := vm.VM{}
-	_, err = reuse.Run(program, nil)
-	require.NoError(t, err)
-	_, err = reuse.Run(program, nil)
-	require.NoError(t, err)
-}
-
 func TestRun_Cast(t *testing.T) {
 	input := `1`
 
@@ -215,19 +201,6 @@ func TestRun_Helpers_Time(t *testing.T) {
 			}
 		})
 	}
-}
-
-func TestRun_MemoryBudget(t *testing.T) {
-	input := `map(1..100, {map(1..100, {map(1..100, {0})})})`
-
-	tree, err := parser.Parse(input)
-	require.NoError(t, err)
-
-	program, err := compiler.Compile(tree, nil)
-	require.NoError(t, err)
-
-	_, err = vm.Run(program, nil)
-	require.Error(t, err)
 }
 
 type ErrorEnv struct {

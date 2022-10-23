@@ -33,7 +33,6 @@ const (
 	OpDivide
 	OpModulo
 	OpExponent
-	OpRange
 	OpMatches
 	OpMatchesConst
 	OpContains
